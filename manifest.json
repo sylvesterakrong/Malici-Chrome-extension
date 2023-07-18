@@ -1,0 +1,23 @@
+{
+    "name": "Malici-Chrome Extension",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Extension enables users input urls to check if the urls are safe or not.",
+    "action":{
+        "default_popup":"index.html",
+        "default_icon":"icon.jpg"
+    },
+
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+M",
+                "mac": "Command+M"
+            }
+        }
+    },
+      
+    "permissions": [
+        "activeTab"
+    ]
+}
