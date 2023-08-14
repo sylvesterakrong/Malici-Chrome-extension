@@ -7,6 +7,16 @@
         "default_popup":"index.html",
         "default_icon":"icon.jpg"
     },
+    "permissions": [
+       
+        "activeTab"
+      ],
+      "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["index.js"]
+        }
+      ],
 
     "commands": {
         "_execute_action": {
@@ -16,8 +26,9 @@
             }
         }
     },
+    "background": {
+        "service_worker": "index.js"
+      }
       
-    "permissions": [
-        "activeTab"
-    ]
+    
 }

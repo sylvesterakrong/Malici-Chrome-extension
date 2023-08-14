@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Malici-Chrome detector</title>
-    <!--<script src="malici.js"></script>-->
     <link rel="stylesheet" href="index.css">
 </head>
 
@@ -11,26 +10,28 @@
 
         <h1> Malici-Chrome detector </h1>
 
-        <div>
+        <div><label for="urlInput">Enter URL:</label>
             <div>
                 <input type="text" 
                 class="textbox"
-                id="urlInput" placeholder="Enter URL">
+                id="urlInput" 
+                placeholder="Enter URL....">
             </div>
 
             <div>
                 <button 
                 class="button"
-                id="mybutton"
+                id="checkButton"
                 >Detect Malicious URLs</button>
             </div>
 
-            <div id="results"></div>
+            <div id="result"> result: </div>
         </div>
     </div>
 
+   <!--<script src="client.js"></script>-->
+    <script src="index.js"></script>
 
-    <script src="malici.js"></script>
 </body>
 
 </html>
