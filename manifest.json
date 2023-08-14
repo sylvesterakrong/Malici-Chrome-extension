@@ -25,10 +25,8 @@
                 "mac": "Command+M"
             }
         }
-    },
-    "background": {
-        "service_worker": "index.js"
-      }
+    }
+
       
     
 }
