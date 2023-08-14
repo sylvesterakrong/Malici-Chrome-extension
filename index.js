@@ -4,31 +4,36 @@ document.addEventListener("DOMContentLoaded", function() {
     let resultElement = document.getElementById("result"); // Declare resultElement using let
     const refreshButton = document.getElementById("refreshButton");
 
-    
+    //this listens for the refresh button then clears all feilds
     refreshButton.addEventListener("click", function() {
       urlInput.value = ""; 
       resultElement.textContent = ""; 
     });
 
 
-
+    //this is where all the query takes place when the detect button is clicked
     checkButton.addEventListener("click", function() {
       const inputUrl = urlInput.value;
   
-      if (inputUrl.startsWith("http")) {
-        resultElement.textContent = "Flagged as Unsafe (HTTP)";
-      } else if(inputUrl.startsWith("https")) {
-          resultElement.textContent = "Flagged as Safe (HTTPS)";
+      if (!inputUrl.startsWith("http://") && !inputUrl.startsWith("https://")) {
+        resultElement.textContent = " Invalid URL: Please enter a valid URL with http:// or https:// protocol. ";
+      }
+      else if(isGibberish(inputUrl)) {
+        resultElement.textContent = "Flagged as Gibberish(Unsafe)";
+      }else if (inputUrl.startsWith("https")) {
+        resultElement.textContent = "Flagged as safe ( HTTPS)";
+      } else if(inputUrl.startsWith("http")) {
+          resultElement.textContent = " Flagged as Unsafe (HTTP) ";
       }else if (safeUrls.includes(inputUrl)) {
-        resultElement.textContent = "Safe";
+        resultElement.textContent = "Safe ";
       } else if (notSafeUrls.includes(inputUrl)) {
-        resultElement.textContent = "Not Safe";
+        resultElement.textContent = " Not Safe ";
       } else if (checkForPhishingKeywords(inputUrl)) {
-        resultElement.textContent = "Flagged as Unsafe (Phishing Keyword)";
+        resultElement.textContent = " Flagged as Unsafe (Phishing Keyword) ";
       } else if (checkLengthAndComplexity(inputUrl)) {
-        resultElement.textContent = "Flagged as Unsafe (Length and Complexity)";
+        resultElement.textContent = " Flagged as Unsafe (Length and Complexity) ";
       } else if (isSpecialTLD(inputUrl)) {
-        resultElement.textContent = "Flagged as Special TLD (safe)";
+        resultElement.textContent = "Flagged as Special TLD (safe) ";
       }else {
         resultElement.textContent = "Unknown";
       }
@@ -39,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
   });
 
-
+//sample of safe urls
   const safeUrls = [
       "https://www.google.com",
       "https://www.microsoft.com",
@@ -65,6 +70,8 @@ document.addEventListener("DOMContentLoaded", function() {
       "knust.edu.gh",
   ];
 
+
+  //sample of unsafe urls
   const notSafeUrls = [
     "https://www.malicious-site.com",
     "https://www.phishing-site.com",
@@ -88,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "https://www.credit-card-scam.net",
   ];
   
-
+//sample of common phishing keywoards
   const knownPhishingKeywords = [
     "login",
   "bank",
@@ -111,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
     return url.length > 100;
   }
 
+  //these are sample special domains
   function isSpecialTLD(url) {
     const parsedUrl = new URL(url);
     const hostname = parsedUrl.hostname;
@@ -129,6 +137,16 @@ document.addEventListener("DOMContentLoaded", function() {
       hostname.endsWith(".jobs")   
     );
   }
+
+
+  //this is to read if the user inoutted gibberish or not
+  function isGibberish(url) {
+    const alphanumericChars = url.match(/[a-zA-Z0-9]/g);
+    const ratio = alphanumericChars ? alphanumericChars.length / url.length : 0;
+    
+    return ratio < 0.5;
+  }
+  
   
   
 

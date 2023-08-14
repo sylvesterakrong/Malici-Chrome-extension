@@ -39,3 +39,14 @@ body{
     background-color: #4CAF50;
     color: white;
   }
+
+
+.result {
+    height: 1cm;
+    text-transform: uppercase;
+    padding-top: 1rem;
+    font-weight: 300;
+    margin-top: 15px;
+    background-color: cornsilk;
+  }
+
