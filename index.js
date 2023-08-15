@@ -14,35 +14,58 @@ document.addEventListener("DOMContentLoaded", function() {
     //this is where all the query takes place when the detect button is clicked
     checkButton.addEventListener("click", function() {
       const inputUrl = urlInput.value;
-  
-      if (!inputUrl.startsWith("http://") && !inputUrl.startsWith("https://")) {
-        resultElement.textContent = " Invalid URL: Please enter a valid URL with http:// or https:// protocol. ";
+      let resultText = "";
+    
+      switch (true) {
+        case notSafeUrls.includes(inputUrl):
+          resultText = "Not Safe";
+          break;
+    
+        case !inputUrl.startsWith("http://") && !inputUrl.startsWith("https://"):
+          resultText = "Invalid URL: Please enter a valid URL with http:// or https:// protocol.";
+          break;
+    
+        case inputUrl.startsWith("http"):
+          resultText = "Flagged as Unsafe (HTTP)";
+          break;
+    
+        case checkForPhishingKeywords(inputUrl):
+          resultText = "Flagged as Unsafe (Phishing Keyword)";
+          break;
+    
+        case inputUrl.startsWith("https"):
+          resultText = "Flagged as safe (HTTPS)";
+          break;
+    
+        case safeUrls.includes(inputUrl):
+          resultText = "Safe";
+          break;
+    
+        case checkLengthAndComplexity(inputUrl):
+          resultText = "Flagged as Unsafe (Length and Complexity)";
+          break;
+    
+        case isSpecialTLD(inputUrl):
+          resultText = "Flagged as Special TLD (safe)";
+          break;
+    
+        case isGibberish(inputUrl):
+          resultText = "Flagged as Gibberish (Unsafe)";
+          break;
+    
+        default:
+          resultText = "Unknown";
       }
-      else if(isGibberish(inputUrl)) {
-        resultElement.textContent = "Flagged as Gibberish(Unsafe)";
-      }else if (inputUrl.startsWith("https")) {
-        resultElement.textContent = "Flagged as safe ( HTTPS)";
-      } else if(inputUrl.startsWith("http")) {
-          resultElement.textContent = " Flagged as Unsafe (HTTP) ";
-      }else if (safeUrls.includes(inputUrl)) {
-        resultElement.textContent = "Safe ";
-      } else if (notSafeUrls.includes(inputUrl)) {
-        resultElement.textContent = " Not Safe ";
-      } else if (checkForPhishingKeywords(inputUrl)) {
-        resultElement.textContent = " Flagged as Unsafe (Phishing Keyword) ";
-      } else if (checkLengthAndComplexity(inputUrl)) {
-        resultElement.textContent = " Flagged as Unsafe (Length and Complexity) ";
-      } else if (isSpecialTLD(inputUrl)) {
-        resultElement.textContent = "Flagged as Special TLD (safe) ";
-      }else {
-        resultElement.textContent = "Unknown";
-      }
+    
+      resultElement.textContent = resultText;
+    });
+    
+    });
+    
 
       
-    });
 
     
-  });
 
 //sample of safe urls
   const safeUrls = [
