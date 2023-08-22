@@ -19,53 +19,69 @@ document.addEventListener("DOMContentLoaded", function() {
       switch (true) {
         case notSafeUrls.includes(inputUrl):
           resultText = "Not Safe";
+          var result = document.getElementById("result");
+          result.style.color="red";
           break;
     
         case !inputUrl.startsWith("http://") && !inputUrl.startsWith("https://"):
           resultText = "Invalid URL: Please enter a valid URL with http:// or https:// protocol.";
+          var result = document.getElementById("result");
+          result.style.color="red";
           break;
-    
-        case inputUrl.startsWith("http"):
-          resultText = "Flagged as Unsafe (HTTP)";
-          break;
-    
-        case checkForPhishingKeywords(inputUrl):
-          resultText = "Flagged as Unsafe (Phishing Keyword)";
-          break;
-    
+
         case inputUrl.startsWith("https"):
-          resultText = "Flagged as safe (HTTPS)";
+            resultText = "Flagged as safe (HTTPS)";
+            var result = document.getElementById("result");
+            result.style.color="green";
           break;
-    
+
+        case inputUrl.startsWith("http"):
+          resultText = "Flagged as unsafe (HTTP)";
+          var result = document.getElementById("result");
+          result.style.color="red";
+          break;
+
         case safeUrls.includes(inputUrl):
           resultText = "Safe";
+          var result = document.getElementById("result");
+          result.style.color="green";
           break;
-    
+
         case checkLengthAndComplexity(inputUrl):
           resultText = "Flagged as Unsafe (Length and Complexity)";
+          var result = document.getElementById("result");
+          result.style.color="red";
+          break;
+
+        case checkForPhishingKeywords(inputUrl):
+            resultText = "Flagged as Unsafe (Phishing Keyword)";
+            var result = document.getElementById("result");
+            result.style.color="red";
           break;
     
         case isSpecialTLD(inputUrl):
           resultText = "Flagged as Special TLD (safe)";
+          var result = document.getElementById("result");
+          result.style.color="green";
           break;
     
         case isGibberish(inputUrl):
           resultText = "Flagged as Gibberish (Unsafe)";
+          var result = document.getElementById("result");
+          result.style.color="red";
           break;
-    
+
         default:
           resultText = "Unknown";
+          var result = document.getElementById("result");
+          result.style.color="red";
       }
+      
     
       resultElement.textContent = resultText;
     });
-    
+       
     });
-    
-
-      
-
-    
 
 //sample of safe urls
   const safeUrls = [
@@ -92,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function() {
       "https://www.knust.edu.gh",
       "knust.edu.gh",
   ];
-
 
   //sample of unsafe urls
   const notSafeUrls = [
